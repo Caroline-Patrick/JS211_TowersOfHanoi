@@ -30,16 +30,41 @@ const printStacks = () => {
 }
 
 // Next, what do you think this function should do?
-const movePiece = () => {
-  // Your code here
+const movePiece = (stack1, stack2) => {
+  let inHand = stack1.pop()
+  stack2.push(inHand)
+  console.log(inHand)
+  console.log(stacks.a)
+  console.log(stacks.b)
 
 }
 
 // Before you move, should you check if the move it actually allowed? Should 3 be able to be stacked on 2
-const isLegal = () => {
-  // Your code here
-
+const isLegal = (stack1, stack2) => {
+  console.log("isLegal was run.")
+  let inHand = stack1.pop()
+  console.log(inHand)
+  console.log(typeof inHand)
+  let checkedDisk = stack2.pop()
+  console.log(checkedDisk)
+if (typeof inHand == "number") {
+  console.log("inHand is a NUMBER")
+  if (parseInt(inHand) < parseInt(checkedDisk) || stack2.length == 0) {
+    stack1.push(inHand)
+    stack2.push(checkedDisk)
+    console.log("It's legal!")
+    movePiece(stack1, stack2)
+  } else {
+    stack1.push(inHand)
+    stack2.push(checkedDisk)
+    console.log("It's NOT legal!")
+  }
+} else {
+  console.log("It's NOT legal!")
 }
+}
+isLegal(stacks.a, stacks.b)
+
 
 // What is a win in Towers of Hanoi? When should this function run?
 const checkForWin = () => {
