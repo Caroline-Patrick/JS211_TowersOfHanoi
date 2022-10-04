@@ -21,6 +21,15 @@ let stacks = {
   b: [],
   c: []
 };
+ let numOfRings = 4
+
+ // What is a win in Towers of Hanoi? When should this function run?
+const checkForWin = (stack2) => {
+  if (parseInt(stack2.length) == parseInt(numOfRings)) {
+    console.log("WINNER WINNER CHIMKIN DINER")
+    return true
+  }
+}
 
 // Start here. What is this function doing?
 const printStacks = () => {
@@ -33,49 +42,53 @@ const printStacks = () => {
 const movePiece = (stack1, stack2) => {
   let inHand = stack1.pop()
   stack2.push(inHand)
-  console.log(inHand)
-  console.log(stacks.a)
-  console.log(stacks.b)
-
+  // console.log('in hand: ' + inHand) //
+  // console.log('stack a: ' + stacks.a) //
+  // console.log('stack b: ' + stacks.b) //
+  // console.log('length of b: '+ stacks.b.length) //
+  checkForWin(stack2)
 }
 
 // Before you move, should you check if the move it actually allowed? Should 3 be able to be stacked on 2
 const isLegal = (stack1, stack2) => {
-  console.log("isLegal was run.")
-  let inHand = stack1.pop()
-  console.log(inHand)
-  console.log(typeof inHand)
+  // console.log("isLegal was run.") //
+  let inHand = stack1.pop();
+  // console.log(inHand) //
+  // console.log(typeof inHand) //
   let checkedDisk = stack2.pop()
-  console.log(checkedDisk)
+  // console.log(checkedDisk) //
 if (typeof inHand == "number") {
-  console.log("inHand is a NUMBER")
-  if (parseInt(inHand) < parseInt(checkedDisk) || stack2.length == 0) {
-    stack1.push(inHand)
-    stack2.push(checkedDisk)
-    console.log("It's legal!")
-    movePiece(stack1, stack2)
-  } else {
+  // console.log("inHand is a NUMBER") //
+  if (parseInt(inHand) > parseInt(checkedDisk)) {
     stack1.push(inHand)
     stack2.push(checkedDisk)
     console.log("It's NOT legal!")
+  } else {
+    if (parseInt(inHand) < parseInt(checkedDisk)) {
+      stack1.push(inHand)
+      stack2.push(checkedDisk)
+      console.log("It's legal!")
+      movePiece(stack1, stack2)
+    } else if (stack2.length == 0) {
+      stack1.push(inHand)
+      console.log("It's legal!")
+      movePiece(stack1, stack2)
+    } else {
+      stack1.push(inHand)
+      stack2.push(checkedDisk)
+      console.log("It's NOT legal!")
+    }
   }
 } else {
   console.log("It's NOT legal!")
 }
 }
-isLegal(stacks.a, stacks.b)
-
-
-// What is a win in Towers of Hanoi? When should this function run?
-const checkForWin = () => {
-  // Your code here
-
-}
+// isLegal(stacks.a, stacks.b)
 
 // When is this function called? What should it do with its argument?
 const towersOfHanoi = (startStack, endStack) => {
-  // Your code here
-
+  console.log(typeof startStack)
+  isLegal(stacks[startStack], stacks[endStack])
 }
 
 const getPrompt = () => {
@@ -121,6 +134,7 @@ if (typeof describe === 'function') {
     it('should detect a win', () => {
       stacks = { a: [], b: [4, 3, 2, 1], c: [] };
       assert.equal(checkForWin(), true);
+
       stacks = { a: [1], b: [4, 3, 2], c: [] };
       assert.equal(checkForWin(), false);
     });
